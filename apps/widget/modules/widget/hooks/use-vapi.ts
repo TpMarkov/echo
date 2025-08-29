@@ -52,7 +52,7 @@ export const useVapi = () => {
           ...prev,
           {
             role: message.role === "user" ? "user" : "assistant",
-            message: message.transcript,
+            text: message.transcript, // ✅ this matches the interface
           },
         ]);
       }

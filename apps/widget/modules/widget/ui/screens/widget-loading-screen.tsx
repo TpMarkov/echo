@@ -29,7 +29,7 @@ export const WidgetLoadingScreen = ({
 
   const validateOrganization = useAction(api.public.organizations.validate);
   const setScreen = useSetAtom(screenAtom);
-  const setLoadingMMessage = useSetAtom(loadingMessageAtom);
+  const setLoadingMessage = useSetAtom(loadingMessageAtom);
   const setOrganizationId = useSetAtom(organizationIdAtom);
 
   const contactSessionId = useAtomValue(
@@ -41,14 +41,14 @@ export const WidgetLoadingScreen = ({
       return;
     }
 
-    setLoadingMMessage("Loading organization...");
+    setLoadingMessage("Loading organization...");
 
     if (!organizationId) {
       setErrorMessage("Organization ID is required");
       setScreen("error");
     }
 
-    setLoadingMMessage("Validating organization...");
+    setLoadingMessage("Validating organization...");
 
     validateOrganization({ organizationId: organizationId as string })
       .then((result) => {
@@ -65,7 +65,7 @@ export const WidgetLoadingScreen = ({
         setScreen("error");
       });
 
-    setLoadingMMessage("Verifying organization...");
+    setLoadingMessage("Verifying organization...");
   }, [
     step,
     organizationId,
@@ -73,7 +73,7 @@ export const WidgetLoadingScreen = ({
     setScreen,
     setStep,
     setOrganizationId,
-    setLoadingMMessage,
+    setLoadingMessage,
     validateOrganization,
   ]);
 
@@ -87,7 +87,7 @@ export const WidgetLoadingScreen = ({
       return;
     }
 
-    setLoadingMMessage("Finding contact session ID ...");
+    setLoadingMessage("Finding contact session ID ...");
 
     if (!contactSessionId) {
       setSessionValid(false);
@@ -95,7 +95,7 @@ export const WidgetLoadingScreen = ({
       return;
     }
 
-    setLoadingMMessage("Validating session...");
+    setLoadingMessage("Validating session...");
 
     validateContactSession({
       contactSessionId,
@@ -108,7 +108,7 @@ export const WidgetLoadingScreen = ({
         setSessionValid(false);
         setStep("done");
       });
-  }, [step, validateContactSession, setLoadingMMessage]);
+  }, [step, validateContactSession, setLoadingMessage]);
 
   useEffect(() => {
     if (step !== "done") {

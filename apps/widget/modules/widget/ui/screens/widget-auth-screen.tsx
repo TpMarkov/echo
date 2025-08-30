@@ -16,7 +16,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "convex/react";
 import { api } from "@workspace/backend/_generated/api";
-import { Doc } from "@workspace/backend/_generated/dataModel";
+import { Doc, Id } from "@workspace/backend/_generated/dataModel";
 import { useAtomValue, useSetAtom } from "jotai";
 import {
   contactSessionIdAtomFamily,
@@ -30,6 +30,7 @@ const formSchema = z.object({
 
 export const WidgetAuthScreen = () => {
   const organizationId = useAtomValue(organizationIdAtom);
+
   const setContactSessionId = useSetAtom(
     contactSessionIdAtomFamily(organizationId || "")
   );
@@ -48,10 +49,6 @@ export const WidgetAuthScreen = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const offset = new Date().getTimezoneOffset();
-
-    if (!organizationId) {
-      return;
-    }
 
     const metadata: Doc<"contactSession">["metadata"] = {
       userAgent: navigator.userAgent,

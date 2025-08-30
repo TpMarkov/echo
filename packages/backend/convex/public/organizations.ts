@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { action, mutation } from "../_generated/server.js";
+import { action } from "../_generated/server.js";
 import { createClerkClient } from "@clerk/backend";
 
 const clerkClient = createClerkClient({

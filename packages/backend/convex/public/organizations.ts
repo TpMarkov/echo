@@ -11,8 +11,6 @@ export const validate = action({
     organizationId: v.string(),
   },
   handler: async (_, args) => {
-    console.log(args.organizationId);
-
     const organization = await clerkClient.organizations.getOrganization({
       organizationId: args.organizationId,
     });

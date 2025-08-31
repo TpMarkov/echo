@@ -65,7 +65,7 @@ export const WidgetAuthScreen = () => {
 
     const contactSessionId = await createContactSession({
       ...values,
-      organizationId,
+      organizationId: organizationId || "",
       metadata,
     });
 

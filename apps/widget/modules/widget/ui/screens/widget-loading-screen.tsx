@@ -51,7 +51,7 @@ export const WidgetLoadingScreen = ({
 
     setLoadingMessage("Verifying organization....");
 
-    validateOrganization({ organizationId })
+    validateOrganization({ organizationId: organizationId as string })
       .then((result) => {
         if (result.valid) {
           setOrganizationId(organizationId);

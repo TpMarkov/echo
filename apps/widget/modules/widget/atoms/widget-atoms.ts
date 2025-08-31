@@ -9,20 +9,11 @@ export const screenAtom = atom<WidgetScreen>("loading");
 
 export const loadingMessageAtom = atom<string | null>(null);
 export const errorMessageAtom = atom<string | null>(null);
-
 export const organizationIdAtom = atom<string | null>(null);
-
-// Organization-scoped contact session atom
-// export const contactSessionIdAtomFamily = atomFamily((organizationId: string) =>
-//   atomWithStorage<Id<"contactSession" | null>>(
-//     `${CONTACT_SESSION_KEY}_${organizationId}`,
-//     null
-//   )
-// );
-
 export const contactSessionIdAtomFamily = atomFamily((organizationId: string) =>
   atomWithStorage<Id<"contactSession"> | null>(
     `${CONTACT_SESSION_KEY}_${organizationId}`,
     null
   )
 );
+export const conversationIdAtom = atom<Id<"conversations"> | null>(null);

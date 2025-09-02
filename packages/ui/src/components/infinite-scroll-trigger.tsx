@@ -25,14 +25,12 @@ export const InfiniteScrollTrigger = ({
   if (isLoadingMore) {
     text = "Loading...";
   } else if (!canLoadMore) {
-    text = "No more text";
+    text = noMoreText;
   }
 
   return (
     <div
-      className={
-        (cn("flex w-full justify-center items-center py-2"), className)
-      }
+      className={cn("flex w-full justify-center items-center py-2", className)}
       ref={ref}
     >
       <Button

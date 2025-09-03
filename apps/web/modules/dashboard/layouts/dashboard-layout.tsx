@@ -1,6 +1,6 @@
 import React from "react";
-import { AuthGuard } from "../../components/auth-guard";
-import { OrganizationGuard } from "../../components/organisation-guard";
+import { AuthGuard } from "../../auth/ui/components/auth-guard";
+import { OrganizationGuard } from "../../auth/ui/components/organisation-guard";
 import { SidebarProvider } from "@workspace/ui/components/sidebar";
 import { cookies } from "next/headers";
 import { DashboardSidebar } from "../ui/components/dashboard-sidebar";

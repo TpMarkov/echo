@@ -4,7 +4,6 @@ import { supportAgent } from "../system/ai/agents/supportAgent.js";
 import { MessageDoc } from "@convex-dev/agent";
 import { paginationOptsValidator, PaginationResult } from "convex/server";
 import { Doc } from "../_generated/dataModel.js";
-import { parseArgs } from "util";
 
 export const getOne = query({
   args: {

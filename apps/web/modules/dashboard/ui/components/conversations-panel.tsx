@@ -4,10 +4,7 @@ import { formatDistanceToNow } from "date-fns";
 import { ConversationsStatusIcon } from "@workspace/ui/components/conversation-status-icon";
 import {
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
-  SelectSeparator,
   SelectTrigger,
   Select,
   SelectValue,
@@ -17,7 +14,6 @@ import { DicebearAvatar } from "@workspace/ui/components/dicebear-avatar";
 import {
   ListIcon,
   ArrowRightIcon,
-  ArrowLeftIcon,
   ArrowUpIcon,
   CheckIcon,
   CornerUpLeftIcon,
@@ -26,7 +22,6 @@ import { useInfiniteScroll } from "@workspace/ui/hooks/use-infinite-scroll";
 import { InfiniteScrollTrigger } from "@workspace/ui/components/infinite-scroll-trigger";
 
 import { api } from "@workspace/backend/_generated/api.js";
-import { getCountriesForTimezone } from "countries-and-timezones";
 import Link from "next/link";
 import { cn } from "@workspace/ui/lib/utils";
 import { usePathname } from "next/navigation";
@@ -110,13 +105,12 @@ export const ConversationsPanel = () => {
           </SelectContent>
         </Select>
       </div>
+
       <ScrollArea className="max-h-[calc(100vh-53px)]">
         <div className="flex w-full flex-1 flex-col text-sm">
           {conversations.results.map((conversation) => {
             const isLastMessageFromOperator =
               conversation.lastMessage?.message?.role !== "user";
-
-            const countryFlag = "/logo.svg";
 
             return (
               <Link
@@ -135,6 +129,7 @@ export const ConversationsPanel = () => {
                       "opacity-100"
                   )}
                 ></div>
+
                 <DicebearAvatar
                   seed={conversation.contactSessionId}
                   size={40}
@@ -145,15 +140,17 @@ export const ConversationsPanel = () => {
                       : ""
                   }
                 />
-                <div className="flex-1">
+
+                <div className="flex-1 min-w-0">
                   <div className="w-full flex items-center gap-2">
                     <span className="truncate font-bold">
                       {conversation.contactSession.name}
                     </span>
-                    <span className="ml-auto shring-0 text-muted-foreground text-xs">
+                    <span className="ml-auto shrink-0 text-muted-foreground text-xs">
                       {formatDistanceToNow(conversation._creationTime)} ago
                     </span>
                   </div>
+
                   <div className="mt-1 flex items-center justify-between gap-2">
                     <div className="flex grow min-w-0 items-center gap-1 overflow-hidden">
                       {isLastMessageFromOperator && (
@@ -168,12 +165,17 @@ export const ConversationsPanel = () => {
                         {conversation.lastMessage?.text}
                       </span>
                     </div>
-                    <ConversationsStatusIcon status={conversation.status} />
+
+                    {/* ✅ Fixed-size wrapper for consistent icon display */}
+                    <div className="shrink-0 w-4 h-4">
+                      <ConversationsStatusIcon status={conversation.status} />
+                    </div>
                   </div>
                 </div>
               </Link>
             );
           })}
+
           {isLoadingFirstPage ? (
             <SkeletonCOnversations />
           ) : (
@@ -192,7 +194,7 @@ export const ConversationsPanel = () => {
 
 export const SkeletonCOnversations = () => {
   return (
-    <div className="flex mnin-h-0 flex-1 flex-col gap-2 overflow-auto">
+    <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-auto">
       <div className="relative flex w-full min-w-0 flex-col p-2">
         <div className="w-full space-y-2">
           {Array.from({ length: 8 }).map((_, index) => (
@@ -201,7 +203,7 @@ export const SkeletonCOnversations = () => {
               <div className="min-w-0 flex-1">
                 <div className="flex w-full items-center gap-2">
                   <Skeleton className="h-4 w-24" />
-                  <Skeleton className="ml-auto h3 w-12 shrink-0" />
+                  <Skeleton className="ml-auto h-3 w-12 shrink-0" />
                 </div>
                 <div className="mt-2">
                   <Skeleton className="h-3 w-full" />

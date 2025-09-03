@@ -5,7 +5,7 @@ import { z } from "zod";
 import { WidgetHeader } from "../components/widget-header";
 import { Button } from "@workspace/ui/components/button";
 import { useAtomValue, useSetAtom } from "jotai";
-import { ArrowLeftIcon, MenuIcon } from "lucide-react";
+import { ArrowLeftIcon, MenuIcon, Wand2Icon } from "lucide-react";
 import { FormField, useFormField, Form } from "@workspace/ui/components/form";
 import {
   contactSessionIdAtomFamily,
@@ -25,6 +25,7 @@ import {
 
 import {
   AIInput,
+  AIInputButton,
   AIInputSubmit,
   AIInputTextarea,
   AIInputToolbar,
@@ -35,7 +36,7 @@ import {
   AIMessage,
   AIMessageContent,
 } from "@workspace/ui/components/ai/message";
-
+import { SendHorizonalIcon } from "lucide-react";
 import { AIResponse } from "@workspace/ui/components/ai/response";
 import {
   AISuggestion,
@@ -191,10 +192,17 @@ export const WidgetChatScreen = () => {
             }}
           />
           <AIInputToolbar>
-            <AIInputTools />
+            <AIInputTools>
+              <AIInputButton>
+                <Wand2Icon />
+                Enhance
+              </AIInputButton>
+            </AIInputTools>
             <AIInputSubmit
               disabled={
-                conversation?.status === "resolved" || !form.formState.isValid
+                conversation?.status === "resolved" ||
+                !form.formState.isValid ||
+                form.formState.isSubmitting
               }
               status="ready"
               type="submit"

@@ -32,6 +32,8 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DicebearAvatar } from "@workspace/ui/components/dicebear-avatar";
+import { Hint } from "@workspace/ui/components/hint";
+import { ConversationStatusButton } from "../components/conversation-status-button";
 
 const formSchema = z.object({
   message: z.string().min(1, "Message is required"),
@@ -77,12 +79,44 @@ export const ConversationIdView = ({
     }
   };
 
+  const updateStatus = useMutation(api.private.conversations.updateStatus);
+
+  const handleToggleStatus = async () => {
+    if (!conversation) {
+      return;
+    }
+
+    let newStatus: "unresolved" | "resolved" | "escalated";
+
+    if (conversation.status === "unresolved") {
+      newStatus = "escalated";
+    } else if (conversation.status === "escalated") {
+      newStatus = "resolved";
+    } else {
+      newStatus = "unresolved";
+    }
+
+    try {
+      await updateStatus({
+        conversationId,
+        status: newStatus,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="flex h-full flex-col bg-muted">
       <header className="flex items-center justify-between border-b bg-background p-2.5">
         <Button size="sm" variant="ghost">
           <MoreHorizontalIcon />
         </Button>
+        {!!conversation && (
+          <ConversationStatusButton
+            status={conversation.status}
+            onClick={handleToggleStatus}
+          />
+        )}
       </header>
       <AIConversation className="max-h-[calc(100vh-180px)]">
         <AIConversationContent>

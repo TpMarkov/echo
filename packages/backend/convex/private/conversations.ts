@@ -4,6 +4,7 @@ import { supportAgent } from "../system/ai/agents/supportAgent.js";
 import { MessageDoc } from "@convex-dev/agent";
 import { paginationOptsValidator, PaginationResult } from "convex/server";
 import { Doc } from "../_generated/dataModel.js";
+import { parseArgs } from "util";
 
 export const getOne = query({
   args: {
@@ -31,14 +32,14 @@ export const getOne = query({
     const conversation = await ctx.db.get(args.conversationId);
 
     if (!conversation) {
-      return new ConvexError({
+      throw new ConvexError({
         code: "NOT_FOUND",
         message: "Conversation not found",
       });
     }
 
     if (conversation.organizationId !== orgId) {
-      return new ConvexError({
+      throw new ConvexError({
         code: "UNAUTHORIZED",
         message: "Invalid Organization ID",
       });
@@ -46,7 +47,7 @@ export const getOne = query({
 
     const contactSession = await ctx.db.get(conversation.contactSessionId);
     if (!contactSession) {
-      return new ConvexError({
+      throw new ConvexError({
         code: "NOT_FOUND",
         message: "Contact session not found",
       });

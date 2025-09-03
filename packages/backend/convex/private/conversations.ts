@@ -21,7 +21,7 @@ export const getMany = query({
 
     if (identity === null) {
       throw new ConvexError({
-        conde: "UNAUTHORIZED",
+        code: "UNAUTHORIZED",
         message: "Identity not found",
       });
     }
@@ -30,7 +30,7 @@ export const getMany = query({
 
     if (!orgId) {
       throw new ConvexError({
-        conde: "UNAUTHORIZED",
+        code: "UNAUTHORIZED",
         message: "Organization not found",
       });
     }

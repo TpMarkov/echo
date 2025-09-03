@@ -33,7 +33,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DicebearAvatar } from "@workspace/ui/components/dicebear-avatar";
 import { Hint } from "@workspace/ui/components/hint";
-import { ConversationStatusButtton } from "../components/conversation-status-button";
+import { ConversationStatusButton } from "../components/conversation-status-button";
 
 const formSchema = z.object({
   message: z.string().min(1, "Message is required"),
@@ -112,7 +112,7 @@ export const ConversationIdView = ({
           <MoreHorizontalIcon />
         </Button>
         {!!conversation && (
-          <ConversationStatusButtton
+          <ConversationStatusButton
             status={conversation.status}
             onClick={handleToggleStatus}
           />

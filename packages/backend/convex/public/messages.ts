@@ -1,8 +1,11 @@
 import { ConvexError, v } from "convex/values";
 import { action, query } from "../_generated/server.js";
-import { internal } from "../_generated/api.js";
+import { components, internal } from "../_generated/api.js";
 import { supportAgent } from "../system/ai/agents/supportAgent.js";
 import { paginationOptsValidator } from "convex/server";
+import { escalateConversation } from "../system/ai/tools/escalateConversation.js";
+import { resolveConversation } from "../system/ai/tools/resolveConversation.js";
+import { saveMessage } from "@convex-dev/agent";
 
 export const create = action({
   args: {
@@ -46,13 +49,23 @@ export const create = action({
       });
     }
 
-    //  Implement subscription check
+    const shouldTriggerAgent = conversation.status === "unresolved";
 
-    await supportAgent.generateText(
-      ctx,
-      { threadId: args.threadId },
-      { prompt: args.prompt }
-    );
+    if (shouldTriggerAgent) {
+      await supportAgent.generateText(
+        ctx,
+        { threadId: args.threadId },
+        {
+          prompt: args.prompt,
+          tools: { escalateConversation, resolveConversation },
+        }
+      );
+    } else {
+      await saveMessage(ctx, components.agent, {
+        threadId: args.threadId,
+        prompt: args.prompt,
+      });
+    }
   },
 });
 

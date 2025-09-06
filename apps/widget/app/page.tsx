@@ -1,7 +1,6 @@
 "use client";
 
 import { WidgetView } from "@/modules/widget/ui/views/widget-view";
-import { useParams } from "next/navigation";
 import { use } from "react";
 
 interface Props {

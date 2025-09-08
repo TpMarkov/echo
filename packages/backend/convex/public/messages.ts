@@ -7,6 +7,8 @@ import { escalateConversation } from "../system/ai/tools/escalateConversation.js
 import { resolveConversation } from "../system/ai/tools/resolveConversation.js";
 import { saveMessage } from "@convex-dev/agent";
 
+import { search } from "../system/ai/tools/search.js";
+
 export const create = action({
   args: {
     prompt: v.string(),
@@ -57,7 +59,11 @@ export const create = action({
         { threadId: args.threadId },
         {
           prompt: args.prompt,
-          tools: { escalateConversation, resolveConversation },
+          tools: {
+            escalateConversationTool: escalateConversation,
+            resolveConversationTool: resolveConversation,
+            searchTool: search,
+          },
         }
       );
     } else {

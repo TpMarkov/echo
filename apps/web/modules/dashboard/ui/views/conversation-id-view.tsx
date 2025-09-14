@@ -35,7 +35,6 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DicebearAvatar } from "@workspace/ui/components/dicebear-avatar";
-import { Hint } from "@workspace/ui/components/hint";
 import { ConversationStatusButton } from "../components/conversation-status-button";
 import { useState } from "react";
 import { cn } from "@workspace/ui/lib/utils";
@@ -173,7 +172,12 @@ export const ConversationIdView = ({
               from={message.role === "user" ? "assistant" : "user"}
             >
               <AIMessageContent>
-                <AIResponse>{message.content}</AIResponse>
+                <AIResponse>
+                  {message.parts
+                    ?.filter((p) => p.type === "text")
+                    .map((p) => p.text)
+                    .join(" ")}
+                </AIResponse>
               </AIMessageContent>
               {message.role === "user" && (
                 <DicebearAvatar

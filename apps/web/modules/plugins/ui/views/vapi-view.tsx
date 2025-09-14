@@ -33,7 +33,6 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { min } from "date-fns";
 import { Button } from "@workspace/ui/components/button";
 
 const vapiFeautures: Feature[] = [

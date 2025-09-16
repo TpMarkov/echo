@@ -32,7 +32,7 @@ import VapiFormFields from "./vapi-form-fields";
 import { widgetSettingsSchema } from "@/modules/customization/schemas";
 import { FormSchema } from "@/modules/customization/types";
 
-type WidgetSettings = Doc<"widgedSettings">;
+type WidgetSettings = Doc<"widgetSettings">;
 
 interface CustomizationProps {
   initialData?: WidgetSettings | null;

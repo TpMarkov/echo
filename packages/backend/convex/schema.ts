@@ -3,7 +3,7 @@ import { defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export default defineSchema({
-  widgedSettings: defineTable({
+  widgetSettings: defineTable({
     organizationId: v.string(),
     greetMessage: v.string(),
     defaultSuggestions: v.object({

@@ -8,12 +8,12 @@ import {
   loadingMessageAtom,
   organizationIdAtom,
   screenAtom,
+  widgetSettingsAtom,
 } from "../../atoms/widget-atoms";
 import { WidgetHeader } from "../components/widget-header";
 import { useEffect, useState } from "react";
-import { useAction, useMutation } from "convex/react";
+import { useAction, useMutation, useQuery } from "convex/react";
 import { api } from "@workspace/backend/_generated/api";
-import { Id } from "@workspace/backend/_generated/dataModel";
 
 type InitStep = "storage" | "org" | "session" | "settings" | "vapi" | "done";
 
@@ -30,6 +30,7 @@ export const WidgetLoadingScreen = ({
   const setLoadingMessage = useSetAtom(loadingMessageAtom);
   const setOrganizationId = useSetAtom(organizationIdAtom);
   const setScreen = useSetAtom(screenAtom);
+  const setWidgetSettings = useSetAtom(widgetSettingsAtom);
 
   const contactSessionId = useAtomValue(
     contactSessionIdAtomFamily(organizationId || "")
@@ -92,7 +93,7 @@ export const WidgetLoadingScreen = ({
 
     if (!contactSessionId) {
       setSessionValid(false);
-      setStep("done");
+      setStep("settings");
       return;
     }
 
@@ -103,11 +104,11 @@ export const WidgetLoadingScreen = ({
     })
       .then((result) => {
         setSessionValid(result.valid);
-        setStep("done");
+        setStep("settings");
       })
       .catch(() => {
         setSessionValid(false);
-        setStep("done");
+        setStep("settings");
       });
   }, [step, contactSessionId, setLoadingMessage, validateContactSession]);
 
@@ -120,6 +121,31 @@ export const WidgetLoadingScreen = ({
 
     setScreen(hasValidSession ? "selection" : "auth");
   }, [step, contactSessionId, sessionValid, setScreen]);
+
+  //  Step 3: Load Widget Settings
+
+  const widgetSettings = useQuery(
+    api.public.widgetSettings.getByOrganizationId,
+
+    organizationId
+      ? {
+          organizationId,
+        }
+      : "skip"
+  );
+
+  useEffect(() => {
+    if (step !== "settings") {
+      return;
+    }
+
+    setLoadingMessage("Loading widget settings...");
+
+    if (widgetSettings !== undefined) {
+      setWidgetSettings(widgetSettings);
+      setStep("done");
+    }
+  }, [step, widgetSettings, setWidgetSettings, setLoadingMessage]);
 
   return (
     <>

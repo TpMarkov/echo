@@ -8,6 +8,7 @@ import {
   loadingMessageAtom,
   organizationIdAtom,
   screenAtom,
+  vapiSecretsAtom,
   widgetSettingsAtom,
 } from "../../atoms/widget-atoms";
 import { WidgetHeader } from "../components/widget-header";
@@ -26,11 +27,18 @@ export const WidgetLoadingScreen = ({
   const [sessionValid, setSessionValid] = useState(false);
 
   const setErrorMessage = useSetAtom(errorMessageAtom);
+
+  const setScreen = useSetAtom(screenAtom);
+
   const loadingMessage = useAtomValue(loadingMessageAtom);
   const setLoadingMessage = useSetAtom(loadingMessageAtom);
+
   const setOrganizationId = useSetAtom(organizationIdAtom);
-  const setScreen = useSetAtom(screenAtom);
+
   const setWidgetSettings = useSetAtom(widgetSettingsAtom);
+
+  const vapiSecret = useAtomValue(vapiSecretsAtom);
+  const setVapiSecret = useSetAtom(vapiSecretsAtom);
 
   const contactSessionId = useAtomValue(
     contactSessionIdAtomFamily(organizationId || "")
@@ -123,7 +131,6 @@ export const WidgetLoadingScreen = ({
   }, [step, contactSessionId, sessionValid, setScreen]);
 
   //  Step 3: Load Widget Settings
-
   const widgetSettings = useQuery(
     api.public.widgetSettings.getByOrganizationId,
 
@@ -143,9 +150,35 @@ export const WidgetLoadingScreen = ({
 
     if (widgetSettings !== undefined) {
       setWidgetSettings(widgetSettings);
-      setStep("done");
+      setStep("vapi");
     }
   }, [step, widgetSettings, setWidgetSettings, setLoadingMessage]);
+
+  // Load vapi secrets
+
+  const getVapiSecrets = useAction(api.public.secrets.getVapiSecrets);
+
+  useEffect(() => {
+    if (step !== "vapi") {
+      return;
+    }
+    if (!organizationId) {
+      setErrorMessage("Organization ID is required");
+      setScreen("error");
+      return;
+    }
+
+    setLoadingMessage("Loading vapi feautures...");
+    getVapiSecrets({ organizationId })
+      .then((secrets) => {
+        setVapiSecret(secrets);
+        setStep("done");
+      })
+      .catch(() => {
+        setVapiSecret(null);
+        setStep("done");
+      });
+  }, [step, organizationId, getVapiSecrets, setVapiSecret, setStep]);
 
   return (
     <>

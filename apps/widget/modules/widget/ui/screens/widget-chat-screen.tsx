@@ -37,7 +37,6 @@ import {
   AIMessage,
   AIMessageContent,
 } from "@workspace/ui/components/ai/message";
-import { SendHorizonalIcon } from "lucide-react";
 import { AIResponse } from "@workspace/ui/components/ai/response";
 import {
   AISuggestion,
@@ -49,7 +48,6 @@ import { useInfiniteScroll } from "@workspace/ui/hooks/use-infinite-scroll";
 import { InfiniteScrollTrigger } from "@workspace/ui/components/infinite-scroll-trigger";
 import { DicebearAvatar } from "@workspace/ui/components/dicebear-avatar";
 import { useMemo } from "react";
-import { isUtf8 } from "buffer";
 
 const formSchema = z.object({
   message: z.string().min(1, "Message is required"),

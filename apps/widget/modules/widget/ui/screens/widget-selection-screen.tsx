@@ -6,14 +6,18 @@ import {
   ChevronRight,
   ChevronRightIcon,
   MessageSquareTextIcon,
+  MicIcon,
+  PhoneIcon,
 } from "lucide-react";
 import { useAtomValue, useSetAtom } from "jotai";
 import {
   contactSessionIdAtomFamily,
   conversationIdAtom,
   errorMessageAtom,
+  hasVapiSecretsAtom,
   organizationIdAtom,
   screenAtom,
+  widgetSettingsAtom,
 } from "../../atoms/widget-atoms";
 import { useMutation } from "convex/react";
 import { api } from "@workspace/backend/_generated/api";
@@ -26,6 +30,8 @@ export const WidgetSelectionScreen = () => {
   const organizationId = useAtomValue(organizationIdAtom);
   const setConversationId = useSetAtom(conversationIdAtom);
   const [isPending, setIsPending] = useState(false);
+  const widgetSettings = useAtomValue(widgetSettingsAtom);
+  const hasVapiSecrets = useAtomValue(hasVapiSecretsAtom);
 
   const contactSessionId = useAtomValue(
     contactSessionIdAtomFamily(organizationId || "")
@@ -90,6 +96,36 @@ export const WidgetSelectionScreen = () => {
           </div>
           <ChevronRightIcon className="size-4" />
         </Button>
+        {hasVapiSecrets && widgetSettings?.vapiSettings?.assistantId && (
+          <Button
+            disabled={isPending}
+            onClick={() => setScreen("voice")}
+            className="h-16 w-full justify-between"
+            variant={"outline"}
+          >
+            <div className="flex items-center gap-x-2">
+              <MicIcon className="size-4" />
+              <span>Start voice call</span>
+            </div>
+            <ChevronRightIcon className="size-4" />
+          </Button>
+        )}
+        {hasVapiSecrets && widgetSettings?.vapiSettings?.phoneNumber && (
+          <Button
+            disabled={isPending}
+            onClick={() => {
+              setScreen("contact");
+            }}
+            className="h-16 w-full justify-between"
+            variant={"outline"}
+          >
+            <div className="flex items-center gap-x-2">
+              <PhoneIcon className="size-4" />
+              <span>Call us</span>
+            </div>
+            <ChevronRightIcon className="size-4" />
+          </Button>
+        )}
       </div>
       <WidgetFooter />
     </>

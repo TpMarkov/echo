@@ -34,19 +34,19 @@ export const unpsert = mutation({
       });
     }
 
-    const existingWidgedSettings = await ctx.db
-      .query("widgedSettings")
+    const existingWidgetSettings = await ctx.db
+      .query("widgetSettings")
       .withIndex("by_organization_id", (q) => q.eq("organizationId", orgId))
       .unique();
 
-    if (existingWidgedSettings) {
-      await ctx.db.patch(existingWidgedSettings._id, {
+    if (existingWidgetSettings) {
+      await ctx.db.patch(existingWidgetSettings._id, {
         greetMessage: args.greetMessage,
         defaultSuggestions: args.defaultSuggestions,
         vapiSettings: args.vapiSettings,
       });
     } else {
-      await ctx.db.insert("widgedSettings", {
+      await ctx.db.insert("widgetSettings", {
         organizationId: orgId,
         greetMessage: args.greetMessage,
         defaultSuggestions: args.defaultSuggestions,
@@ -76,11 +76,11 @@ export const getOne = query({
       });
     }
 
-    const widgedSettings = await ctx.db
-      .query("widgedSettings")
+    const widgetSettings = await ctx.db
+      .query("widgetSettings")
       .withIndex("by_organization_id", (q) => q.eq("organizationId", orgId))
       .unique();
 
-    return widgedSettings;
+    return widgetSettings;
   },
 });

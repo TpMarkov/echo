@@ -27,8 +27,10 @@ export default function RootLayout({
       >
         <ClerkProvider>
           <Providers>
-            <Toaster />
-            {children}
+            <div className="w-screen h-screen">
+              <Toaster />
+              {children}
+            </div>
           </Providers>
         </ClerkProvider>
       </body>

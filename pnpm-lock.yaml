@@ -159,6 +159,9 @@ importers:
       '@workspace/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      bowser:
+        specifier: ^2.12.1
+        version: 2.12.1
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1

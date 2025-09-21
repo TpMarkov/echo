@@ -13,7 +13,7 @@ const Page = () => {
         </PremiumFeatureOverlay>
       }
     >
-      <FilesView />;
+      <FilesView />
     </Protect>
   );
 };

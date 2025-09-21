@@ -116,7 +116,7 @@ export const PremiumFeatureOverlay = ({ children }: PremiumFeatureOverlay) => {
               className="w-full"
               size="lg"
               onClick={() => {
-                router.push("billing");
+                router.push("/billing");
               }}
             >
               View Plans

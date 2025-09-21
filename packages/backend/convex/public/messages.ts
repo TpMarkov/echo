@@ -51,7 +51,26 @@ export const create = action({
       });
     }
 
-    const shouldTriggerAgent = conversation.status === "unresolved";
+    //This refreshes the users session if they are within the threshold
+    //  becouse they have active chat to prevent session
+    //  expiration within the conversation
+    await ctx.runMutation(internal.system.contactSessions.refresh, {
+      contactSessionId: args.contactSessionId,
+    });
+
+    const subscription = await ctx.runQuery(
+      internal.system.subscriptions.getByOrganizationId,
+      {
+        organizationId: conversation.organizationId,
+      }
+    );
+
+    // ADD this check if you want users to be unable to send messages
+    // without having a subscription
+
+    // Allow to generate AI response only if subscription is active
+    const shouldTriggerAgent =
+      conversation.status === "unresolved" && subscription?.status === "active";
 
     if (shouldTriggerAgent) {
       await supportAgent.generateText(

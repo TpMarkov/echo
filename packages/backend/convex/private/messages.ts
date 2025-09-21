@@ -31,6 +31,23 @@ export const enhanceResponse = action({
       });
     }
 
+    // ADD this check if you want users to be unable to send messages
+    // without having a subscription
+    const subscription = await ctx.runQuery(
+      internal.system.subscriptions.getByOrganizationId,
+      {
+        organizationId: orgId,
+      }
+    );
+
+    // if no subscription no AI response will be generated and enhance Response function won't work either
+    if (subscription?.status !== "active") {
+      throw new ConvexError({
+        code: "BAD_REQUEST",
+        message: "Missing subscription",
+      });
+    }
+
     const respose = await generateText({
       model: openai("gpt-4o-mini"),
       messages: [

@@ -1,6 +1,6 @@
 import { v } from "convex/values";
 import { mutation } from "@workspace/backend/_generated/server.js";
-const SESSION_DURATION_MS = 24 * 60 * 60 * 1000;
+import { SESSION_DURATION_MS } from "../constants.js";
 
 export const create = mutation({
   args: {

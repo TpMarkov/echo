@@ -27,7 +27,7 @@ export const upsert = internalMutation({
   },
 });
 
-export const getByOrganizationIi = internalQuery({
+export const getByOrganizationId = internalQuery({
   args: {
     organizationId: v.string(),
   },

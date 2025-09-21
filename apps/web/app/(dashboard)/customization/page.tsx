@@ -13,7 +13,7 @@ const Page = () => {
         </PremiumFeatureOverlay>
       }
     >
-      <CustomizationView />;
+      <CustomizationView />
     </Protect>
   );
 };

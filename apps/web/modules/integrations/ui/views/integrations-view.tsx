@@ -87,7 +87,7 @@ export const IntegrationsView = () => {
                 Add the following code to your website to enable the chatbox
               </p>
             </div>
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-2">
               {INTEGRATIONS.map((integration) => {
                 return (
                   <button

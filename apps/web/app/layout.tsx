@@ -4,7 +4,6 @@ import { Toaster } from "@workspace/ui/components/sonner";
 import "@workspace/ui/globals.css";
 import { Providers } from "@/components/providers";
 import { ClerkProvider } from "@clerk/nextjs";
-import Head from "next/head";
 
 const fontSans = Geist({
   subsets: ["latin"],
@@ -16,13 +15,6 @@ const fontMono = Geist_Mono({
   variable: "--font-mono",
 });
 
-export const metaData = {
-  title: "Echo",
-  icons: {
-    icon: "/favicon.ico",
-  },
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -30,9 +22,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <Head>
-        <link rel="icon" href="/favicon.ico"></link>
-      </Head>
       <body
         className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased `}
       >

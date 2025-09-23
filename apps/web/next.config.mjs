@@ -4,6 +4,15 @@ const nextConfig = {
   transpilePackages: ["@workspace/ui"],
   // TURN ON / OFF INIDICATOR FROM NEXT FOR ERRORS
   devIndicators: false,
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/conversations",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default withSentryConfig(nextConfig, {

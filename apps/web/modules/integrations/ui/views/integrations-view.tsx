@@ -17,7 +17,6 @@ import {
 } from "@workspace/ui/components/dialog";
 import { useState } from "react";
 import { createScript } from "../../utils";
-import { OrganizationMembershipPublicUserData } from "@clerk/nextjs/server";
 
 export const IntegrationsView = () => {
   const { organization } = useOrganization();

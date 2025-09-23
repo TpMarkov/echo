@@ -25,5 +25,5 @@ export type IntegrationId = (typeof INTEGRATIONS)[number]["id"];
 
 export const HTML_SCRIPT = `<script data-organization-id="{{ORGANIZATION_ID}}"></script>`;
 export const REACT_SCRIPT = `<script data-organization-id="{{ORGANIZATION_ID}}"></script>`;
-export const NEXTJS_SCRIPT = `<scriptdata-organization-id="{{ORGANIZATION_ID}}"></scriptdata-organization-id=>`;
+export const NEXTJS_SCRIPT = `<script data-organization-id="{{ORGANIZATION_ID}}"></script>`;
 export const JAVASCRIPT_SCRIPT = `<script data-organization-id="{{ORGANIZATION_ID}}"></script>`;
